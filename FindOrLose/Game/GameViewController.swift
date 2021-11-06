@@ -27,9 +27,13 @@
 /// THE SOFTWARE.
 
 import UIKit
+import Combine
 
 class GameViewController: UIViewController {
   // MARK: - Variables
+  
+  /// You’ll use this property to store all of your subscriptions.
+  var subscriptions: Set<AnyCancellable> = []
 
   var gameState: GameState = .stop {
     didSet {
@@ -62,7 +66,7 @@ class GameViewController: UIViewController {
   // MARK: - View Controller Life Cycle
 
   override func viewDidLoad() {
-    precondition(!UnsplashAPI.accessToken.isEmpty, "Please provide a valid Unsplash access token!")
+//    precondition(!UnsplashAPI.accessToken.isEmpty, "Please provide a valid Unsplash access token!")
 
     title = "Find or Lose"
     gameScoreLabel.text = "Score: \(gameScore)"
@@ -85,73 +89,74 @@ class GameViewController: UIViewController {
   }
 
   // MARK: - Game Functions
-
+  
   func playGame() {
-    gameTimer?.invalidate()
-
-    gameStateButton.setTitle("Stop", for: .normal)
-
-    gameLevel += 1
-    title = "Level: \(gameLevel)"
-
-    gameScoreLabel.text = "Score: \(gameScore)"
-    gameScore += 200
-
-    resetImages()
-    startLoaders()
-
-    UnsplashAPI.randomImage { [unowned self] randomImageResponse in
-      guard let randomImageResponse = randomImageResponse else {
-        DispatchQueue.main.async {
+    
+    /// 1. Get a publisher that will provide you with a random image value.
+    let firstImage = UnsplashAPI.randomImage()
+    /// 2. Apply the flatMap operator, which transforms the values from one publisher into a
+    ///   new publisher. In this case you’re waiting for the output of the random image call, and
+    ///   then transforming that into a publisher for the image download call.
+      .flatMap { randomImageResponse in
+        ImageDownloader.download(url: randomImageResponse.activeURL)
+        
+      }
+    
+    let secondImage = UnsplashAPI.randomImage()
+      .flatMap { randomImageResponse in
+        ImageDownloader.download(url: randomImageResponse.activeURL)
+      }
+    
+    /// At this point, you have downloaded two random images. Now it’s time
+    /// to, pardon the pun, combine them. You’ll use zip to do this.
+    
+    /// 1. zip makes a new publisher by combining the outputs of existing ones. It will wait until both
+    ///   publishers have emitted a value, then it will send the combined values downstream.
+    firstImage.zip(secondImage)
+    
+    /// 2. The receive(on:) operator allows you to specify where you want events from the
+    ///   upstream to be processed. Since you’re operating on the UI, you’ll use the main dispatch queue.
+      .receive(on: DispatchQueue.main)
+    
+    /// 3. It’s your first subscriber! sink(receiveCompletion:receiveValue:) creates a subscriber for you
+    ///   which will execute those two closures on completion or receipt of a value.
+      .sink(receiveCompletion: { [unowned self] completion in
+        /// 4. Your publisher can complete in two ways — either it finishes or fails.
+        ///   If there’s a failure, you stop the game.
+        switch completion {
+        case .finished: break
+        case .failure(let error):
+          print("Error: \(error)")
           self.gameState = .stop
         }
-
-        return
-      }
-
-      ImageDownloader.download(url: randomImageResponse.urls.regular) { [unowned self] image in
-        guard let image = image else { return }
-
-        self.gameImages.append(image)
-
-        UnsplashAPI.randomImage { [unowned self] randomImageResponse in
-          guard let randomImageResponse = randomImageResponse else {
-            DispatchQueue.main.async {
-              self.gameState = .stop
-            }
-
-            return
-          }
-
-          ImageDownloader.download(url: randomImageResponse.urls.regular) { [unowned self] image in
-            guard let image = image else { return }
-
-            self.gameImages.append(contentsOf: [image, image, image])
-            self.gameImages.shuffle()
-
-            DispatchQueue.main.async {
-              self.gameScoreLabel.text = "Score: \(self.gameScore)"
-
-              self.gameTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [unowned self] timer in
-                DispatchQueue.main.async {
-                  self.gameScoreLabel.text = "Score: \(self.gameScore)"
-                }
-                self.gameScore -= 10
-
-                if self.gameScore <= 0 {
-                  self.gameScore = 0
-                  
-                  timer.invalidate()
-                }
-              }
-
-              self.stopLoaders()
-              self.setImages()
+      }, receiveValue: { [unowned self] first, second in
+        
+        /// 5. When you receive your two random images, add them to an array and
+        ///   shuffle, then update the UI.
+        self.gameImages = [first, second, second, second].shuffled()
+        self.gameScoreLabel.text = "Score: \(self.gameScore)"
+        
+        /// Score!
+        /// Schedule gameTimer to fire every very 0.1 seconds and decrease the score by 10.
+        self.gameTimer = Timer
+          .scheduledTimer(withTimeInterval: 0.1, repeats: true) { [unowned self] timer in
+            self.gameScoreLabel.text = "Score: \(self.gameScore)"
+            self.gameScore -= 10
+            
+            /// When the score reaches 0, you invalidate timer.
+            if self.gameScore <= 0 {
+              self.gameScore = 0
+              
+              timer.invalidate()
             }
           }
-        }
-      }
-    }
+        
+        self.stopLoaders()
+        self.setImages()
+      })
+    
+      /// 6.
+      .store(in: &subscriptions)
   }
 
   func stopGame() {

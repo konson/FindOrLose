@@ -29,12 +29,28 @@
 import Foundation
 import Combine
 
+enum SourceURL: String {
+//  static var accessToken: String {
+//    return "MkvxqMCKT5I9jCw1U325uEFET0c85d43vr7eJxsaDg4"
+//  }
+  
+  case unsplash = "https://api.unsplash.com/photos/random/?client_id=MkvxqMCKT5I9jCw1U325uEFET0c85d43vr7eJxsaDg4"
+  case doggies = "https://random.dog/woof.json"
+}
+
 enum UnsplashAPI {
-  static let accessToken = "MkvxqMCKT5I9jCw1U325uEFET0c85d43vr7eJxsaDg4"
+
 
   /// Replace with new signature. Now, the method doesn’t take a completion closure as a parameter. Instead, it returns a publisher, with an output type of RandomImageResponse and a failure type of GameError.
   static func randomImage() -> AnyPublisher<RandomImageResponse, GameError> {
-    let url = URL(string: "https://api.unsplash.com/photos/random/?client_id=\(accessToken)")!
+    
+
+//    let url = URL(string: "https://api.unsplash.com/photos/random/?client_id=\(accessToken)")!
+//
+//    let dogURL = URL(string: "https://random.dog/woof.json")!
+    
+    let url = URL(string: SourceURL.doggies.rawValue)!
+    
 
     let config = URLSessionConfiguration.default
     config.requestCachePolicy = .reloadIgnoringLocalCacheData
@@ -69,30 +85,5 @@ enum UnsplashAPI {
     
     /// 8. If you were to check the return type of mapError at this point, you would be greeted with something quite horrific. The .eraseToAnyPublisher operator tidies all that mess up so you’re returning something more usable.
       .eraseToAnyPublisher()
-  }
-    
-  static func randomImageOLD(completion: @escaping (RandomImageResponse?) -> Void) {
-    let url = URL(string: "https://api.unsplash.com/photos/random/?client_id=\(accessToken)")!
-
-    let config = URLSessionConfiguration.default
-    config.requestCachePolicy = .reloadIgnoringLocalCacheData
-    config.urlCache = nil
-    let session = URLSession(configuration: config)
-
-    var urlRequest = URLRequest(url: url)
-    urlRequest.addValue("Accept-Version", forHTTPHeaderField: "v1")
-
-    session.dataTask(with: urlRequest) { data, response, error in
-      guard
-        let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
-        let data = data, error == nil,
-        let decodedResponse = try? JSONDecoder().decode(RandomImageResponse.self, from: data)
-        else {
-          completion(nil)
-          return
-      }
-
-      completion(decodedResponse)
-    }.resume()
   }
 }

@@ -29,10 +29,24 @@
 import Foundation
 
 struct RandomImageResponse: Decodable {
-  let urls: ImageType
+  let urls: ImageType?
+  let url: String?
+  
+  var activeURL: String {
+    self.urls?.regular ?? self.url ?? ""
+  }
 }
 
 // MARK: - Sample of complete JSON returned from API.
+
+//https://random.dog/woof.json
+// 20211106133420
+// https://random.dog/woof.json
+//
+//{
+//  "fileSizeBytes": 1445908,
+//  "url": "https://random.dog/7b3154ef-18ea-42de-8c35-e8cd85ba9965.jpg"
+//}
 
 //// 20211106111706
 //// https://api.unsplash.com/photos/random/?client_id=MkvxqMCKT5I9jCw1U325uEFET0c85d43vr7eJxsaDg4

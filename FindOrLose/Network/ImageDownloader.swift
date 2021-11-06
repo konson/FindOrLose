@@ -28,22 +28,46 @@
 
 import Foundation
 import UIKit
+import Combine
 
 enum ImageDownloader {
-  static func download(url: String, completion: @escaping (UIImage?) -> Void) {
-    let url = URL(string: url)!
-
-    URLSession.shared.dataTask(with: url) { data, response, error in
-      guard
-        let httpURLResponse = response as? HTTPURLResponse,
-        httpURLResponse.statusCode == 200,
-        let data = data, error == nil,
-        let image = UIImage(data: data)
+  
+  /// 1. Like before, change the signature so that the method returns a publisher instead of accepting a completion block.
+  static func download(url: String) -> AnyPublisher<UIImage, GameError> {
+    
+    guard let url = URL(string: url) else {
+      return Fail(error: GameError.invalidURL)
+        .eraseToAnyPublisher()
+    }
+    
+    /// 2. Get a dataTaskPublisher for the image URL.
+    return URLSession.shared.dataTaskPublisher(for: url)
+    
+      /// 3. Use tryMap to check the response code and extract the data if everything is OK.
+      .tryMap { response -> Data in
+        guard
+          let httpURLResponse = response.response as? HTTPURLResponse,
+          httpURLResponse.statusCode == 200
         else {
-          completion(nil)
-          return
+          throw GameError.statusCode
+        }
+        
+        return response.data
       }
-      completion(image)
-    }.resume()
+    
+      /// 4. Use another tryMap operator to change the upstream Data to UIImage, throwing an error if this fails.
+      .tryMap { data in
+        guard let image = UIImage(data: data) else {
+          throw GameError.invalidImage
+        }
+        
+        return image
+      }
+    
+      /// 5. Map the error to a GameError.
+      .mapError { GameError.map($0) }
+    
+      /// 6. .eraseToAnyPublisher to return a nice type.
+      .eraseToAnyPublisher()
   }
 }
