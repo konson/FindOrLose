@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="6gM-QB-Vw4">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="6gM-QB-Vw4">
     <device id="retina4_0" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15703"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -15,7 +17,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oca-gW-SWd">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oca-gW-SWd">
                                 <rect key="frame" x="16" y="504" width="288" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="chw-dB-4Eu"/>
@@ -25,24 +27,34 @@
                                     <action selector="playOrStopActionWithSender:" destination="qpt-yt-uqP" eventType="touchUpInside" id="8pn-NV-oHa"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zdA-6I-jSA">
+                                <rect key="frame" x="16" y="449" width="288" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="ae4-XD-0l2"/>
+                                </constraints>
+                                <state key="normal" title="Play Doggie"/>
+                                <connections>
+                                    <action selector="playDoggieOrStopAction:" destination="qpt-yt-uqP" eventType="touchUpInside" id="OIK-Wj-rDT"/>
+                                </connections>
+                            </button>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="xLG-pu-D7x">
                                 <rect key="frame" x="16" y="105" width="134.5" height="134.5"/>
-                                <color key="backgroundColor" systemColor="separatorColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" systemColor="separatorColor"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="xLG-pu-D7x" secondAttribute="height" multiplier="1:1" id="hnj-hX-Up1"/>
                                 </constraints>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="M7e-Io-9AY">
                                 <rect key="frame" x="169.5" y="105" width="134.5" height="134.5"/>
-                                <color key="backgroundColor" systemColor="separatorColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" systemColor="separatorColor"/>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="rz5-3l-bIW">
                                 <rect key="frame" x="16" y="259.5" width="134.5" height="134.5"/>
-                                <color key="backgroundColor" systemColor="separatorColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" systemColor="separatorColor"/>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="YbZ-EP-8q5">
                                 <rect key="frame" x="169.5" y="259.5" width="134.5" height="134.5"/>
-                                <color key="backgroundColor" systemColor="separatorColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" systemColor="separatorColor"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XmK-7t-813">
                                 <rect key="frame" x="16" y="105" width="134.5" height="134.5"/>
@@ -94,17 +106,21 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="2sq-hk-PVN"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="XPE-pA-kpm" firstAttribute="height" secondItem="M7e-Io-9AY" secondAttribute="height" multiplier="1.00372" id="16z-P9-0k4"/>
                             <constraint firstItem="JOp-bk-Lip" firstAttribute="centerX" secondItem="XPE-pA-kpm" secondAttribute="centerX" id="2C0-GO-hvm"/>
                             <constraint firstItem="JOp-bk-Lip" firstAttribute="width" secondItem="XPE-pA-kpm" secondAttribute="width" id="3Hd-No-cFn"/>
+                            <constraint firstItem="zdA-6I-jSA" firstAttribute="height" secondItem="oca-gW-SWd" secondAttribute="height" id="3yb-Is-fYP"/>
                             <constraint firstItem="aTd-eV-0WE" firstAttribute="width" secondItem="qER-Bw-HnW" secondAttribute="width" id="7FK-Yh-p8O"/>
                             <constraint firstItem="XPE-pA-kpm" firstAttribute="centerX" secondItem="M7e-Io-9AY" secondAttribute="centerX" id="7S6-GY-T0b"/>
                             <constraint firstItem="XmK-7t-813" firstAttribute="centerX" secondItem="xLG-pu-D7x" secondAttribute="centerX" id="7gM-Aw-R0f"/>
                             <constraint firstItem="qER-Bw-HnW" firstAttribute="height" secondItem="YbZ-EP-8q5" secondAttribute="height" multiplier="1.00372" id="9by-1S-T5W"/>
                             <constraint firstItem="2sq-hk-PVN" firstAttribute="bottom" secondItem="oca-gW-SWd" secondAttribute="bottom" constant="20" id="9r6-Wt-Yve"/>
+                            <constraint firstItem="zdA-6I-jSA" firstAttribute="width" secondItem="oca-gW-SWd" secondAttribute="width" id="Aei-lA-UKH"/>
                             <constraint firstItem="uUg-ly-D2D" firstAttribute="centerX" secondItem="viR-Au-M9V" secondAttribute="centerX" id="BHG-OY-NLa"/>
+                            <constraint firstItem="zdA-6I-jSA" firstAttribute="centerX" secondItem="oca-gW-SWd" secondAttribute="centerX" id="C3o-ui-eWI"/>
                             <constraint firstItem="3Qv-1b-VSm" firstAttribute="leading" secondItem="2sq-hk-PVN" secondAttribute="leading" constant="16" id="CCe-ou-IZG"/>
                             <constraint firstItem="aTd-eV-0WE" firstAttribute="centerY" secondItem="qER-Bw-HnW" secondAttribute="centerY" id="D1m-Mw-yTf"/>
                             <constraint firstItem="rz5-3l-bIW" firstAttribute="width" secondItem="rz5-3l-bIW" secondAttribute="height" multiplier="1:1" id="DDv-7Y-qu2"/>
@@ -113,7 +129,6 @@
                             <constraint firstItem="viR-Au-M9V" firstAttribute="height" secondItem="rz5-3l-bIW" secondAttribute="height" multiplier="1.00372" id="Ghd-kn-6yY"/>
                             <constraint firstItem="2cu-X6-Mhg" firstAttribute="centerY" secondItem="XmK-7t-813" secondAttribute="centerY" id="IU7-TJ-OUd"/>
                             <constraint firstItem="aTd-eV-0WE" firstAttribute="height" secondItem="qER-Bw-HnW" secondAttribute="height" id="Jgd-hy-T22"/>
-                            <constraint firstItem="oca-gW-SWd" firstAttribute="leading" secondItem="2sq-hk-PVN" secondAttribute="leading" constant="16" id="NNB-3B-Iq1"/>
                             <constraint firstItem="YbZ-EP-8q5" firstAttribute="top" secondItem="M7e-Io-9AY" secondAttribute="bottom" constant="20" id="NNG-mb-1Di"/>
                             <constraint firstItem="2cu-X6-Mhg" firstAttribute="centerX" secondItem="XmK-7t-813" secondAttribute="centerX" id="OLC-QR-W76"/>
                             <constraint firstItem="M7e-Io-9AY" firstAttribute="width" secondItem="qAA-Hn-bLB" secondAttribute="width" multiplier="0.42" id="OjN-Q9-NId"/>
@@ -124,14 +139,16 @@
                             <constraint firstItem="XPE-pA-kpm" firstAttribute="centerY" secondItem="M7e-Io-9AY" secondAttribute="centerY" id="W1E-9I-NWU"/>
                             <constraint firstItem="XmK-7t-813" firstAttribute="centerY" secondItem="xLG-pu-D7x" secondAttribute="centerY" id="W50-rd-nxm"/>
                             <constraint firstItem="xLG-pu-D7x" firstAttribute="top" secondItem="3Qv-1b-VSm" secondAttribute="bottom" constant="20" id="XSb-G8-RCK"/>
+                            <constraint firstItem="zdA-6I-jSA" firstAttribute="leading" secondItem="rz5-3l-bIW" secondAttribute="leading" id="Xxf-j4-HxN"/>
                             <constraint firstItem="uUg-ly-D2D" firstAttribute="height" secondItem="viR-Au-M9V" secondAttribute="height" id="Y1K-5X-FkM"/>
                             <constraint firstItem="XmK-7t-813" firstAttribute="width" secondItem="xLG-pu-D7x" secondAttribute="width" multiplier="1.00372" id="YN1-Nl-y7q"/>
                             <constraint firstItem="2cu-X6-Mhg" firstAttribute="height" secondItem="XmK-7t-813" secondAttribute="height" multiplier="1.00372" id="Yfn-Pu-PxJ"/>
                             <constraint firstItem="viR-Au-M9V" firstAttribute="centerY" secondItem="rz5-3l-bIW" secondAttribute="centerY" id="Ysp-vc-oMj"/>
+                            <constraint firstItem="zdA-6I-jSA" firstAttribute="trailing" secondItem="YbZ-EP-8q5" secondAttribute="trailing" id="Z6K-bI-DMk"/>
                             <constraint firstItem="uUg-ly-D2D" firstAttribute="width" secondItem="viR-Au-M9V" secondAttribute="width" multiplier="1.00372" id="ZW0-zZ-c4R"/>
                             <constraint firstItem="qER-Bw-HnW" firstAttribute="centerX" secondItem="YbZ-EP-8q5" secondAttribute="centerX" id="ao9-ok-GZX"/>
                             <constraint firstItem="2sq-hk-PVN" firstAttribute="trailing" secondItem="YbZ-EP-8q5" secondAttribute="trailing" constant="16" id="cGU-EH-NeL"/>
-                            <constraint firstItem="2sq-hk-PVN" firstAttribute="trailing" secondItem="oca-gW-SWd" secondAttribute="trailing" constant="16" id="eCI-UD-WEg"/>
+                            <constraint firstItem="oca-gW-SWd" firstAttribute="top" secondItem="zdA-6I-jSA" secondAttribute="bottom" constant="11" id="dpz-IZ-Gfe"/>
                             <constraint firstItem="2cu-X6-Mhg" firstAttribute="width" secondItem="XmK-7t-813" secondAttribute="width" multiplier="1.00372" id="ewc-Fq-Zch"/>
                             <constraint firstItem="XPE-pA-kpm" firstAttribute="width" secondItem="M7e-Io-9AY" secondAttribute="width" multiplier="1.00372" id="gav-TJ-twB"/>
                             <constraint firstItem="aTd-eV-0WE" firstAttribute="centerX" secondItem="qER-Bw-HnW" secondAttribute="centerX" id="hlH-Wl-uGY"/>
@@ -150,7 +167,6 @@
                             <constraint firstItem="rz5-3l-bIW" firstAttribute="leading" secondItem="2sq-hk-PVN" secondAttribute="leading" constant="16" id="zsP-T2-hAW"/>
                             <constraint firstItem="qER-Bw-HnW" firstAttribute="width" secondItem="YbZ-EP-8q5" secondAttribute="width" multiplier="1.00372" id="ztm-Ac-iZl"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="2sq-hk-PVN"/>
                     </view>
                     <navigationItem key="navigationItem" id="81Z-9o-Fa3"/>
                     <connections>
@@ -191,4 +207,12 @@
             <point key="canvasLocation" x="-289" y="53"/>
         </scene>
     </scenes>
+    <resources>
+        <systemColor name="separatorColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>

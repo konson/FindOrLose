@@ -29,6 +29,18 @@
 import Foundation
 
 enum GameState {
+  case playDoggie
   case play
   case stop
+  
+  var url: String {
+    switch self {
+    case .playDoggie :
+      return "https://random.dog/woof.json"
+    case .play:
+      return "https://api.unsplash.com/photos/random/?client_id=MkvxqMCKT5I9jCw1U325uEFET0c85d43vr7eJxsaDg4"
+    case .stop:
+      return ""
+    }
+  }
 }

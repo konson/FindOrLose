@@ -29,28 +29,16 @@
 import Foundation
 import Combine
 
-enum SourceURL: String {
-//  static var accessToken: String {
-//    return "MkvxqMCKT5I9jCw1U325uEFET0c85d43vr7eJxsaDg4"
-//  }
-  
-  case unsplash = "https://api.unsplash.com/photos/random/?client_id=MkvxqMCKT5I9jCw1U325uEFET0c85d43vr7eJxsaDg4"
-  case doggies = "https://random.dog/woof.json"
-}
-
 enum UnsplashAPI {
 
-
   /// Replace with new signature. Now, the method doesn’t take a completion closure as a parameter. Instead, it returns a publisher, with an output type of RandomImageResponse and a failure type of GameError.
-  static func randomImage() -> AnyPublisher<RandomImageResponse, GameError> {
+  static func randomImage(gameState: GameState) throws -> AnyPublisher<RandomImageResponse, GameError> {
     
-
-//    let url = URL(string: "https://api.unsplash.com/photos/random/?client_id=\(accessToken)")!
-//
-//    let dogURL = URL(string: "https://random.dog/woof.json")!
-    
-    let url = URL(string: SourceURL.doggies.rawValue)!
-    
+    guard
+      let url = URL(string: gameState.url)
+    else {
+      throw GameError.invalidURL
+    }
 
     let config = URLSessionConfiguration.default
     config.requestCachePolicy = .reloadIgnoringLocalCacheData
@@ -60,7 +48,7 @@ enum UnsplashAPI {
     var urlRequest = URLRequest(url: url)
     urlRequest.addValue("Accept-Version", forHTTPHeaderField: "v1")
     
-/// 1. You get a publisher from the URL session for your URL request. This is a URLSession.DataTaskPublisher, which has an output type of (data: Data, response: URLResponse). That’s not the right output type, so you’re going to use a series of operators to get to where you need to be.
+    /// 1. You get a publisher from the URL session for your URL request. This is a URLSession.DataTaskPublisher, which has an output type of (data: Data, response: URLResponse). That’s not the right output type, so you’re going to use a series of operators to get to where you need to be.
     return session.dataTaskPublisher(for: urlRequest)
     
     /// 2. Apply the tryMap operator. This operator takes the upstream value and attempts to convert it to a different type, with the possibility of throwing an error. There is also a map operator for mapping operations that can’t throw errors.
