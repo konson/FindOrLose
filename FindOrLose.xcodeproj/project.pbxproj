@@ -13,6 +13,7 @@
 		49D12A0923C7F4EA008E0DD5 /* ImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D12A0823C7F4EA008E0DD5 /* ImageDownloader.swift */; };
 		49D8C8D423C7F0C500DF1E40 /* ImageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D8C8D323C7F0C500DF1E40 /* ImageType.swift */; };
 		49D8C8D623C7F0F100DF1E40 /* RandomImageResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D8C8D523C7F0F100DF1E40 /* RandomImageResponse.swift */; };
+		51AC38EC2736CF36005C18EC /* GameError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51AC38EB2736CF36005C18EC /* GameError.swift */; };
 		5394F02521864DF5006E754C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5394F02321864DF4006E754C /* LaunchScreen.storyboard */; };
 		D2A5F2091F4A9144005CD714 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D2A5F2071F4A9144005CD714 /* Main.storyboard */; };
 		D2A5F20B1F4A9144005CD714 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D2A5F20A1F4A9144005CD714 /* Assets.xcassets */; };
@@ -26,6 +27,7 @@
 		49D12A0823C7F4EA008E0DD5 /* ImageDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDownloader.swift; sourceTree = "<group>"; };
 		49D8C8D323C7F0C500DF1E40 /* ImageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageType.swift; sourceTree = "<group>"; };
 		49D8C8D523C7F0F100DF1E40 /* RandomImageResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomImageResponse.swift; sourceTree = "<group>"; };
+		51AC38EB2736CF36005C18EC /* GameError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameError.swift; sourceTree = "<group>"; };
 		5394F02421864DF4006E754C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D2A5F2001F4A9144005CD714 /* FindOrLose.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FindOrLose.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2A5F2081F4A9144005CD714 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -58,6 +60,7 @@
 			isa = PBXGroup;
 			children = (
 				4993B04523BA9C1F00C5203B /* GameViewController.swift */,
+				51AC38EB2736CF36005C18EC /* GameError.swift */,
 				49D12A0323C7F235008E0DD5 /* GameState.swift */,
 			);
 			path = Game;
@@ -182,6 +185,7 @@
 				49D12A0923C7F4EA008E0DD5 /* ImageDownloader.swift in Sources */,
 				49D12A0423C7F235008E0DD5 /* GameState.swift in Sources */,
 				D2A5F2211F4A96D0005CD714 /* AppDelegate.swift in Sources */,
+				51AC38EC2736CF36005C18EC /* GameError.swift in Sources */,
 				49D12A0723C7F398008E0DD5 /* UnsplashAPI.swift in Sources */,
 				49D8C8D623C7F0F100DF1E40 /* RandomImageResponse.swift in Sources */,
 			);
@@ -326,13 +330,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				DEVELOPMENT_TEAM = 877X5B27ZV;
 				INFOPLIST_FILE = FindOrLose/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.raywenderlich.FindOrLose;
+				PRODUCT_BUNDLE_IDENTIFIER = com.alecskonson.FindOrLose;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -345,13 +350,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				DEVELOPMENT_TEAM = 877X5B27ZV;
 				INFOPLIST_FILE = FindOrLose/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.raywenderlich.FindOrLose;
+				PRODUCT_BUNDLE_IDENTIFIER = com.alecskonson.FindOrLose;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
